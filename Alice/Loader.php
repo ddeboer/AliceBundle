@@ -85,6 +85,8 @@ class Loader
 
     /**
      * @param array<string> $files
+     *
+     * @return ArrayCollection References
      */
     public function load(array $files)
     {
@@ -107,6 +109,8 @@ class Loader
 
         // remove processors when file is loaded
         $this->processors = array();
+
+        return $this->references;
     }
 
     /**

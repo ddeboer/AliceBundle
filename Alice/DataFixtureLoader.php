@@ -2,6 +2,7 @@
 
 namespace Hautelook\AliceBundle\Alice;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -29,6 +30,8 @@ abstract class DataFixtureLoader implements FixtureInterface, ContainerAwareInte
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
+     *
+     * @return Collection References
      */
     public function load(ObjectManager $manager)
     {
@@ -42,7 +45,7 @@ abstract class DataFixtureLoader implements FixtureInterface, ContainerAwareInte
             $loader->addProcessor($processor);
         }
 
-        $loader->load($this->getFixtures());
+        return $loader->load($this->getFixtures());
     }
 
     /**

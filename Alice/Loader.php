@@ -71,7 +71,13 @@ class Loader
 
         $newReferences = array();
         foreach ($this->references as $name => $reference) {
-            $newReferences[$name] = $this->persister->merge($reference);
+            // Don't merge value objects, e.g. Doctrine embeddables
+            $metadata = $manager->getClassMetadata(get_class($reference));
+            if (count($metadata->getIdentifier()) > 0) {
+                $reference = $this->persister->merge($reference);
+            }
+
+            $newReferences[$name] = $reference;
         }
         $this->references = new ArrayCollection($newReferences);
 
